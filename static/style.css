@@ -1,0 +1,11 @@
+body {
+    background-color: #f3f4f6;
+}
+
+.card {
+    border-radius: 12px;
+}
+
+h2.card-title {
+    font-weight: bold;
+}

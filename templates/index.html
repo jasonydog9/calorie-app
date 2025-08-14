@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🔥 Calorie Predictor</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h2 class="card-title text-center mb-4">🔥 Calorie Prediction</h2>
+                        
+                        <form id="predict-form">
+                            <div class="mb-3">
+                                <label for="Gender" class="form-label">Gender</label>
+                                <select class="form-select" name="Gender" required>
+                                    <option value="" selected disabled>Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="Age" class="form-label">Age</label>
+                                <input type="number" step="0.1" class="form-control" name="Age" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="Weight" class="form-label">Weight (kg)</label>
+                                <input type="number" step="0.1" class="form-control" name="Weight" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="Height" class="form-label">Height (cm)</label>
+                                <input type="number" step="0.1" class="form-control" name="Height" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="Duration" class="form-label">Duration (min)</label>
+                                <input type="number" step="0.1" class="form-control" name="Duration" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="Heart_Rate" class="form-label">Heart Rate (BPM)</label>
+                                <input type="number" step="0.1" class="form-control" name="Heart_Rate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="Body_Temp" class="form-label">Body Temperature (Celsius)</label>
+                                <input type="number" step="0.1" class="form-control" name="Body_Temp" required>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success">Predict Calories</button>
+                            </div>
+                        </form>
+
+                        <div id="result" class="mt-4 text-center fw-bold fs-4 text-primary"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS for form handling -->
+    <script>
+        document.getElementById("predict-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = parseFloat(value);
+            });
+
+            const response = await fetch("/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            document.getElementById("result").innerText = `🔥 Estimated Calories: ${result.calories}`;
+        });
+    </script>
+</body>
+</html>
