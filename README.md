@@ -2,6 +2,8 @@
 
 A machine learning–powered system that predicts calorie intake based on user and food-related data. This project combines multiple ML models, advanced preprocessing, and a production-ready interface for accurate and deployable predictions.
 
+👉 **[Live Demo](http://13.59.23.213/)**  
+
 ---
 
 ## Features
